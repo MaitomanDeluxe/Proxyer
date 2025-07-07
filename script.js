@@ -3,9 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const proxyButton = document.getElementById('proxyButton');
     const proxyFrame = document.getElementById('proxyFrame');
 
-    // ★ここにCloudflare WorkerのURLを設定してください★
-    // 例: const WORKER_URL = 'https://your-worker-subdomain.your-domain.workers.dev';
-    const WORKER_URL = 'https://YOUR_WORKER_URL_HERE'; 
+    // ★★★ ここにあなたのCloudflare WorkerのURLを設定してください ★★★
+    const WORKER_URL = 'https://yt-audio-api.maikanamaikana.workers.dev/'; 
 
     proxyButton.addEventListener('click', () => {
         const targetUrl = urlInput.value.trim();
