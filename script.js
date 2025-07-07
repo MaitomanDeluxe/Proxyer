@@ -1,7 +1,8 @@
+// script.js
 document.addEventListener('DOMContentLoaded', () => {
     const urlInput = document.getElementById('urlInput');
     const proxyButton = document.getElementById('proxyButton');
-    // const proxyFrame = document.getElementById('proxyFrame'); // iframeは不要になったので削除
+    // const proxyFrame = document.getElementById('proxyFrame'); // この行は削除されていることを確認
 
     // ★ここにあなたのCloudflare WorkerのURLを設定してください★
     const WORKER_URL = 'https://yt-audio-api.maikanamaikana.workers.dev/'; 
@@ -12,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (targetUrl) {
             // WorkerのURLにターゲットURLをクエリパラメータとして付与
             const proxyTarget = `${WORKER_URL}?target=${encodeURIComponent(targetUrl)}`;
-            
+
             // 新しいタブでプロキシされたコンテンツを開く
             window.open(proxyTarget, '_blank'); 
         } else {
