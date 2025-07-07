@@ -4,13 +4,162 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ウェブプロキシ</title>
-    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* style.css の内容をここから貼り付け */
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            color: #e0e0e0;
+            overflow: hidden;
+        }
+
+        .container {
+            background-color: rgba(20, 20, 40, 0.9);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.4), 0 0 60px rgba(0, 255, 255, 0.2);
+            text-align: center;
+            width: 90%;
+            max-width: 700px;
+            border: 2px solid #00ffff;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 1s ease-out;
+        }
+
+        h1 {
+            color: #00ffff;
+            margin-bottom: 35px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+            font-size: 2.5em;
+        }
+
+        #urlInput {
+            width: calc(100% - 40px);
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            border: 2px solid #00aaff;
+            border-radius: 5px;
+            background-color: #0d1a2e;
+            color: #e0e0e0;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 0 8px rgba(0, 170, 255, 0.3);
+        }
+
+        #urlInput::placeholder {
+            color: #888;
+        }
+
+        #urlInput:focus {
+            outline: none;
+            border-color: #00ffff;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.6), inset 0 0 8px rgba(0, 170, 255, 0.5);
+            background-color: #1a2a40;
+        }
+
+        #proxyButton {
+            background: linear-gradient(45deg, #00aaff, #00ffff);
+            color: white;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4);
+        }
+
+        #proxyButton:hover {
+            background: linear-gradient(45deg, #00ffff, #00aaff);
+            box-shadow: 0 8px 20px rgba(0, 255, 255, 0.6);
+            transform: translateY(-2px);
+        }
+
+        #proxyButton:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(0, 255, 255, 0.3);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            #urlInput, #proxyButton {
+                font-size: 1em;
+                padding: 12px 15px;
+            }
+        }
+        /* style.css の内容をここまで貼り付け */
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>ウェブプロキシ</h1>
         <input type="text" id="urlInput" placeholder="プロキシしたいURLを入力してください" autocapitalize="off">
         <button id="proxyButton">プロキシ</button>
-        </div>
-    <script src="script.js"></script>
-</body></html>
+    </div>
+
+    <script>
+        /* script.js の内容をここから貼り付け */
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlInput = document.getElementById('urlInput');
+            const proxyButton = document.getElementById('proxyButton');
+
+            // ★★★ ここにあなたのCloudflare WorkerのURLを設定してください ★★★
+            const WORKER_URL = 'https://yt-audio-api.maikanamaikana.workers.dev/'; 
+
+            // プロキシ処理を実行する関数
+            function executeProxy() {
+                const targetUrl = urlInput.value.trim();
+                if (targetUrl) {
+                    // WorkerのURLにターゲットURLをクエリパラメータとして付与
+                    const proxyTarget = `${WORKER_URL}?target=${encodeURIComponent(targetUrl)}`;
+                    
+                    // 新しいタブでプロキシされたコンテンツを開く
+                    window.open(proxyTarget, '_blank'); 
+                } else {
+                    alert('プロキシしたいURLを入力してください。');
+                }
+            }
+
+            // ボタンクリックでプロキシを実行
+            proxyButton.addEventListener('click', executeProxy);
+
+            // Enterキーでもプロキシを実行できるようにする
+            urlInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    executeProxy(); // プロキシ実行関数を呼び出す
+                }
+            });
+        });
+        /* script.js の内容をここまで貼り付け */
+    </script>
+</body>
+</html>
