@@ -137,17 +137,25 @@
 
             // プロキシ処理を実行する関数
             function executeProxy() {
-                const targetUrl = urlInput.value.trim();
-                if (targetUrl) {
-                    // WorkerのURLにターゲットURLをクエリパラメータとして付与
-                    const proxyTarget = `${WORKER_URL}?target=${encodeURIComponent(targetUrl)}`;
-                    
-                    // 新しいタブでプロキシされたコンテンツを開く
-                    window.open(proxyTarget, '_blank'); 
-                } else {
-                    alert('プロキシしたいURLを入力してください。');
-                }
+        let targetUrl = urlInput.value.trim();
+
+        if (targetUrl) {
+            // ここから修正
+            // ユーザーが 'http://' または 'https://' で始めていない場合のみ 'https://' を追加
+            if (!targetUrl.startsWith('http://') && !targetUrl.startsWith('https://')) {
+                targetUrl = 'https://' + targetUrl;
             }
+            // ここまで修正
+
+            // WorkerのURLにターゲットURLをクエリパラメータとして付与
+            const proxyTarget = `${WORKER_URL}?target=${encodeURIComponent(targetUrl)}`;
+            
+            // 新しいタブでプロキシされたコンテンツを開く
+            window.open(proxyTarget, '_blank'); 
+        } else {
+            alert('プロキシしたいURLを入力してください。');
+        }
+    }
 
             // ボタンクリックでプロキシを実行
             proxyButton.addEventListener('click', executeProxy);
